@@ -1,0 +1,72 @@
+esphome:
+  name: esp32-for-digital-pump
+  includes:
+   
+  libraries:
+    
+  
+ 
+
+
+external_components:
+  - source: 
+      type: local
+      path: components
+    components: [digital_pump]
+
+esp32:
+  board: esp-wrover-kit
+  framework:
+    type: arduino
+
+# Enable logging
+logger:
+
+# Enable Home Assistant API
+api:
+  password: "testing"
+
+ota:
+  password: "testing"
+
+wifi:
+  ssid: "Livebox-36B0"
+  password: "4CHfRsdx9C9c8VdH2t"
+
+  # Enable fallback hotspot (captive portal) in case wifi connection fails
+  ap:
+    ssid: "Esp32-For-Testing-Mlx9060"
+    password: "Rhg1rO0ix8Oz"
+
+captive_portal:
+
+number:
+  - platform: template
+    step: 1
+    max_value: 100000
+    min_value: 0
+    optimistic: true
+    name: "Dose"
+    mode: AUTO
+    id: my_number
+
+text_sensor:
+  - platform: template
+    id: "testing"
+    name: "Testting"
+
+digital_pump:
+  - id : Pump1
+    pin: 2
+    dose: 2.0
+    calibration: 20.0
+  - id : Pump2
+    pin: 2
+    dose: 2.0
+    calibration: 20.0
+
+
+
+    #sensors:
+web_server:
+  port: 80

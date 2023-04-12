@@ -40,33 +40,23 @@ wifi:
 
 captive_portal:
 
-number:
-  - platform: template
-    step: 1
-    max_value: 100000
-    min_value: 0
-    optimistic: true
-    name: "Dose"
-    mode: AUTO
-    id: my_number
-
-text_sensor:
-  - platform: template
-    id: "testing"
-    name: "Testting"
 
 digital_pump:
   - id : Pump1
     pin: 2
-    dose: 2.0
-    calibration: 20.0
-  - id : Pump2
-    pin: 2
-    dose: 2.0
-    calibration: 20.0
+    doser_on: # switch for the doser
+      name: "Doser ON"
+    dose: # Number for the dose in (L)
+      name: "Pump 1 dose (L)"
+      mode: box
+      min_value: 0
+      max_value: 1000
+    calibration: # Number for the dose calibration (L/s)
+      name: "Pump 1 Calibration (L/s)"
+      mode: box
+      min_value: 0
+      max_value: 100000
 
-
-
-    #sensors:
+#sensors:
 web_server:
   port: 80

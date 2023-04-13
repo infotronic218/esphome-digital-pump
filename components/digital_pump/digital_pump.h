@@ -14,7 +14,7 @@ namespace esphome {
          digital_pump::TemplateNumber  * _calibration{nullptr} ;
          digital_pump::TemplateNumber  *_dose_number{nullptr} ; 
          digital_pump::DigitalSwitch * _doser_on_switch {nullptr};
-         
+         digital_pump::DigitalSwitch * _auto_mode_switch {nullptr};
          public:
             DigitalPump();
             void setup() override ;
@@ -25,6 +25,7 @@ namespace esphome {
             void set_calibration_number(digital_pump::TemplateNumber *num){this->_calibration = num;}
             void set_dose_number(digital_pump::TemplateNumber *num){this->_dose_number = num ; }
             void set_dose_on_switch( digital_pump::DigitalSwitch *sw){this->_doser_on_switch = sw ; }
+             void set_auto_mode_switch( digital_pump::DigitalSwitch *sw){this->_auto_mode_switch = sw ; }
      };
 
 

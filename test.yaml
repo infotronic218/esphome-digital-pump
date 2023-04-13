@@ -45,6 +45,9 @@ captive_portal:
 digital_pump:
   - id : Pump1
     pin: 2
+    auto_mode: # switch the operation mode
+      name: "Doser Auto Mode"
+      
     doser_on: # switch for the doser
       name: "Doser ON"
     dose: # Number for the dose in (L)

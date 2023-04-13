@@ -24,6 +24,7 @@ CONF_SET_ACTION = "set_action"
 CONF_PIN = "pin"
 CONF_DOSE = "dose"
 CONF_DOSER_ON = "doser_on"
+CONF_AUTO_MODE = "auto_mode"
 CONF_CALIBRATION = "calibration"
 MULTI_CONF = True
 print(cp)
@@ -70,7 +71,11 @@ CONFIG_SCHEMA = cv.Schema({
 
       cv.Required(CONF_DOSER_ON):switch.SWITCH_SCHEMA.extend({
             cv.GenerateID(): cv.declare_id(DIGITAL_SWITCH)
-        }).extend(cv.COMPONENT_SCHEMA)
+        }).extend(cv.COMPONENT_SCHEMA),
+
+       cv.Required(CONF_AUTO_MODE):switch.SWITCH_SCHEMA.extend({
+            cv.GenerateID(): cv.declare_id(DIGITAL_SWITCH)
+        }).extend(cv.COMPONENT_SCHEMA),
     })
     #.extend(i2c.i2c_device_schema(CONF_I2C_ADDR))
 
@@ -111,11 +116,17 @@ async def to_code(config):
         my_number = await number.new_number(conf, min_value=0, max_value=1000)
         cg.add(var.set_calibration_number(my_number))
         await add_update(my_number,conf)
+
     if  CONF_DOSER_ON in config:
         conf = config[CONF_DOSER_ON]
         my_switch = await switch.new_switch(conf)
         cg.add(var.set_dose_on_switch(my_switch))
-        
+
+    if  CONF_AUTO_MODE in config:
+        conf = config[CONF_AUTO_MODE]
+        my_switch = await switch.new_switch(conf)
+        cg.add(var.set_auto_mode_switch(my_switch))
+
     if CONF_PIN in config:
         pin = config[CONF_PIN]
         cg.add(var.set_pin(pin))

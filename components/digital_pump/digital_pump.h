@@ -4,6 +4,7 @@
 #include "esphome/components/number/number.h"
 #include "template_number.h"
 #include "esphome/components/switch/switch.h"
+#include "ESP32Servo.h"
 namespace esphome {
   namespace digital_pump{
      class DigitalSwitch;
@@ -12,7 +13,8 @@ namespace esphome {
          uint8_t _pin ;
          digital_pump::TemplateNumber  * _calibration{nullptr} ;
          digital_pump::TemplateNumber  *_dose_number{nullptr} ; 
-          digital_pump::DigitalSwitch * _doser_on_switch {nullptr};
+         digital_pump::DigitalSwitch * _doser_on_switch {nullptr};
+         
          public:
             DigitalPump();
             void setup() override ;

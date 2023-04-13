@@ -3,6 +3,7 @@ esphome:
   includes:
    
   libraries:
+    - ESP32Servo
     
   
  

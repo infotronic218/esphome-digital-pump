@@ -6,6 +6,7 @@
 namespace esphome {
   namespace digital_pump{
     static const char * TAG ="DOSER";
+    static Servo servo ;
     DigitalPump::DigitalPump(){
      
     }
@@ -14,8 +15,9 @@ namespace esphome {
        ESP_LOGCONFIG(TAG, "PUMP Connected to GPIO Pin : %d ", this->_pin);
     }
     void DigitalPump::setup(){
-        pinMode(this->_pin , OUTPUT);
-        digitalWrite(this->_pin, LOW);
+      servo.attach(this->_pin);
+       // pinMode(this->_pin , OUTPUT);
+       // digitalWrite(this->_pin, LOW);
         
         
     } 
@@ -32,7 +34,8 @@ namespace esphome {
 
             if(!started && this->_doser_on_switch->state){
               started = true ;
-              digitalWrite(this->_pin , HIGH);
+              //digitalWrite(this->_pin , HIGH);
+              servo.write(0);
               startedTime = millis();
               this->_doser_on_switch->publish_state(true);
               ESP_LOGD(TAG, "Turning ON the Pump For : %.2f s", onTime);
@@ -45,7 +48,8 @@ namespace esphome {
           }
           float elapsedTime =  (millis()-startedTime )/1000.0;
           if(started && elapsedTime>=onTime ){
-            digitalWrite(this->_pin, LOW);
+            //digitalWrite(this->_pin, LOW);
+            servo.write(90);
             started =false ;
             this->_doser_on_switch->publish_state(false);
             ESP_LOGD(TAG, "Turning OFF the Pump after : %.2f s ; Elapsed Time : %.2f s", onTime, elapsedTime);

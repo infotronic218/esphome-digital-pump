@@ -110,14 +110,14 @@ async def to_code(config):
     
     if CONF_DOSE in config:
         conf = config[CONF_DOSE]
-        my_number = await number.new_number(conf, min_value=0, max_value=1000)
+        my_number = await number.new_number(conf, min_value=0, max_value=1000, step=conf[CONF_STEP])
         cg.add(var.set_dose_number(my_number))
         await add_update(my_number,conf)
         
 
     if CONF_CALIBRATION in config:
         conf = config[CONF_CALIBRATION]
-        my_number = await number.new_number(conf, min_value=0, max_value=1000)
+        my_number = await number.new_number(conf, min_value=0, max_value=1000, step=conf[CONF_STEP])
         cg.add(var.set_calibration_number(my_number))
         await add_update(my_number,conf)
 

@@ -22,6 +22,8 @@ from esphome.const import (
 )
 CONF_SET_ACTION = "set_action"
 CONF_PIN = "pin"
+CONF_SPEED = "speed"
+CONF_CLOCKWISE_ROTATION = "clockwise_rotation"
 CONF_DOSE = "dose"
 CONF_DOSER_ON = "doser_on"
 CONF_AUTO_MODE = "auto_mode"
@@ -45,6 +47,8 @@ TemplateNumber = template_number_ns.class_("TemplateNumber",number.Number, cg.Po
 CONFIG_SCHEMA = cv.Schema({
       cv.GenerateID(): cv.declare_id(DIGITAL_PUMP),
       cv.Required(CONF_PIN):int,
+      cv.Required(CONF_CLOCKWISE_ROTATION):cv.boolean,
+      cv.Required(CONF_SPEED):cv.float_,
       cv.Required(CONF_CALIBRATION):number.NUMBER_SCHEMA.extend({
             cv.GenerateID(): cv.declare_id(TemplateNumber),
             cv.Optional(CONF_MAX_VALUE, default=10000): cv.float_,
@@ -131,4 +135,10 @@ async def to_code(config):
         pin = config[CONF_PIN]
         cg.add(var.set_pin(pin))
 
+    if CONF_SPEED in config:
+        speed = config[CONF_SPEED]
+        cg.add(var.set_speed(speed))
     
+    if CONF_CLOCKWISE_ROTATION in config:
+        rotation = config[CONF_CLOCKWISE_ROTATION]
+        cg.add(var.set_clockwise_rotation(rotation))

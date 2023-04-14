@@ -11,6 +11,8 @@ namespace esphome {
      class DigitalPump: public Component {
         private:
          uint8_t _pin ;
+         float _speed ;
+         bool _clockwise_rotation ;
          digital_pump::TemplateNumber  * _calibration{nullptr} ;
          digital_pump::TemplateNumber  *_dose_number{nullptr} ; 
          digital_pump::DigitalSwitch * _doser_on_switch {nullptr};
@@ -22,10 +24,12 @@ namespace esphome {
             void dump_config() override;
             float get_setup_priority() const override { return esphome::setup_priority::AFTER_WIFI; }
             void set_pin(uint8_t pin){this->_pin = pin;}
+            void set_speed(float sp){this->_speed = sp;}
+            void set_clockwise_rotation(bool rot){this->_clockwise_rotation = rot;}
             void set_calibration_number(digital_pump::TemplateNumber *num){this->_calibration = num;}
             void set_dose_number(digital_pump::TemplateNumber *num){this->_dose_number = num ; }
             void set_dose_on_switch( digital_pump::DigitalSwitch *sw){this->_doser_on_switch = sw ; }
-             void set_auto_mode_switch( digital_pump::DigitalSwitch *sw){this->_auto_mode_switch = sw ; }
+            void set_auto_mode_switch( digital_pump::DigitalSwitch *sw){this->_auto_mode_switch = sw ; }
      };
 
 

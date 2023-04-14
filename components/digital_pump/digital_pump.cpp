@@ -13,12 +13,12 @@ namespace esphome {
     void DigitalPump::dump_config(){
        ESP_LOGCONFIG(TAG, "PUMP Setting ");
        ESP_LOGCONFIG(TAG, "PUMP Connected to GPIO Pin : %d ", this->_pin);
+       ESP_LOGCONFIG(TAG, "PUMP Speed Set to : %.2f ", this->_speed);
+       const char *rot = this->_clockwise_rotation? "CLOCKWISE" : "COUNTER CLOCKWISE";
+       ESP_LOGCONFIG(TAG, "PUMP Rotation Set to : %s ", rot);
     }
     void DigitalPump::setup(){
       servo.attach(this->_pin);
-       // pinMode(this->_pin , OUTPUT);
-       // digitalWrite(this->_pin, LOW);
-        
         
     } 
     static bool started = false ;
@@ -26,7 +26,13 @@ namespace esphome {
     static unsigned long startedTime ;
     static bool lastMode = false ;
     void DigitalPump::loop(){
-          //Serial.println("Hello friend");
+        float realSpeed = 0 ;
+        if(this->_clockwise_rotation){
+           realSpeed = 90 - this->_speed ;
+        }else {
+          realSpeed = 90 + this->_speed ;
+        }
+       
           if(lastMode != this->_auto_mode_switch->state){
                  const char * mode = this->_auto_mode_switch->state? "AUTO":"MANUAL";
                   servo.write(90);
@@ -43,8 +49,7 @@ namespace esphome {
 
                 if(!started && this->_doser_on_switch->state){
                   started = true ;
-                  //digitalWrite(this->_pin , HIGH);
-                  servo.write(0);
+                  servo.write(realSpeed);
                   startedTime = millis();
                   this->_doser_on_switch->publish_state(true);
                   ESP_LOGD(TAG, "Turning ON the Pump For : %.2f s", onTime);
@@ -57,7 +62,6 @@ namespace esphome {
               }
               float elapsedTime =  (millis()-startedTime )/1000.0;
               if(started && elapsedTime>=onTime ){
-                //digitalWrite(this->_pin, LOW);
                 servo.write(90);
                 started =false ;
                 this->_doser_on_switch->publish_state(false);
@@ -65,7 +69,7 @@ namespace esphome {
               }
           } else {
             if(this->_doser_on_switch->state && !started){
-                  servo.write(0);
+                  servo.write(realSpeed);
                   this->_doser_on_switch->publish_state(true);
                   ESP_LOGD(TAG, "Turning ON the Pump Manual Mode");
                   started = true ;

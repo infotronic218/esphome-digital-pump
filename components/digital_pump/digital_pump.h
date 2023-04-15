@@ -22,7 +22,7 @@ namespace esphome {
             void setup() override ;
             void loop() override ;
             void dump_config() override;
-            float get_setup_priority() const override { return esphome::setup_priority::AFTER_WIFI; }
+            float get_setup_priority() const override { return esphome::setup_priority::LATE; }
             void set_pin(uint8_t pin){this->_pin = pin;}
             void set_speed(float sp){this->_speed = sp;}
             void set_clockwise_rotation(bool rot){this->_clockwise_rotation = rot;}

@@ -1,0 +1,60 @@
+esphome:
+  name: esp32-for-digital-pump
+  includes:
+   
+  libraries:
+    - ESP32Servo
+    
+  
+ 
+
+
+external_components:
+  - source: 
+      type: local
+      path: components
+    components: [DFRobot_ESP_PH]
+
+esp32:
+  board: esp-wrover-kit
+  framework:
+    type: arduino
+
+# Enable logging
+logger:
+
+# Enable Home Assistant API
+api:
+  password: "testing"
+
+ota:
+  password: "testing"
+
+wifi:
+  ssid: "Livebox-36B0"
+  password: "4CHfRsdx9C9c8VdH2t"
+
+  # Enable fallback hotspot (captive portal) in case wifi connection fails
+  ap:
+    ssid: "Esp32-For-Testing-Mlx9060"
+    password: "Rhg1rO0ix8Oz"
+
+captive_portal:
+
+DFRobot_ESP_PH:
+  - id: PH1
+    pin: 35
+    acid_voltage: 1000
+    neutral_voltage: 15255
+    temperature: 25
+    update_interval: 10s
+    calibration_mode:
+      name: "Calibration mode"
+    ph_sensor:
+      name: "PH sensor 1"
+    
+
+
+#sensors:
+web_server:
+  port: 80

@@ -12,14 +12,27 @@ namespace esphome{
     }
 
     void DFRobotPH::setup(){
-        
+        if(!(this->_neutralVoltage> PH_8_VOLTAGE) && (this->_neutralVoltage < PH_6_VOLTAGE)){
+            // buffer solution:7.0 is not valid
+            ESP_LOGE(TAG, "Neutral Voltage(Solution:7.0) Configuration Error");
+            ESP_LOGE(TAG, "Check the Neutral Voltage Calibration");
+            ESP_LOGE(TAG, "A valid calibration is range is [%d ,  %d]", PH_8_VOLTAGE, PH_6_VOLTAGE);
+        }
+
+        if(!(this->_acidVoltage > PH_5_VOLTAGE) && (this->_acidVoltage < PH_3_VOLTAGE)){
+            //buffer solution:4.0
+            ESP_LOGE(TAG, "Acid Voltage(Solution:4.0) Configuration Error");
+            ESP_LOGE(TAG, "Check the Acid Voltage Calibration");
+            ESP_LOGE(TAG, "A valid calibration is range is [%d ,  %d]", PH_5_VOLTAGE, PH_3_VOLTAGE);
+            
+        }
     }
     void DFRobotPH::update(){
         float  voltage = analogRead(this->_pin) / ESPADC * ESPVOLTAGE; // read the voltage
         if(this->_calibration_mode_switch->state){
           ESP_LOGD(TAG, "Calibration mode of the PH Sensor ");
           ESP_LOGD(TAG, "Use and Acid or Neutral solution for calibration");
-          ESP_LOGD(TAG, "Copy the following Voltage corresponding to your Acid or Neutral voltage calibration");
+          ESP_LOGD(TAG, "Copy the following Voltage corresponding to your Acid or Neutral Voltage Calibration");
           ESP_LOGD(TAG, "The Calibration voltage is : %.2f", voltage);
           return ;  
         }

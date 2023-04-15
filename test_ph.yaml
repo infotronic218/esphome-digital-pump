@@ -43,14 +43,14 @@ captive_portal:
 
 DFRobot_ESP_PH:
   - id: PH1
-    pin: 35
-    acid_voltage: 1000
-    neutral_voltage: 15255
-    temperature: 25
+    pin: 35  # ADC pin Connected to the PH Sensor
+    acid_voltage: 1000      # Calibration for Acid solution (4.0)
+    neutral_voltage: 15255  # Calibration for Neutral solution (7.0)
+    temperature: 25 
     update_interval: 10s
-    calibration_mode:
+    calibration_mode: # Switch to select calibration mode 
       name: "Calibration mode"
-    ph_sensor:
+    ph_sensor: # The PH sensor holding the read value
       name: "PH sensor 1"
     
 

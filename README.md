@@ -1,4 +1,4 @@
-# ESPHOME Digital pump
+# ESPHOME Digital pump and DFRobot PH Sensor 
 
 
 * Adding the PUMP to the configuration 

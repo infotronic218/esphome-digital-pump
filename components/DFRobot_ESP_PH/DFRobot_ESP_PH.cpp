@@ -2,8 +2,11 @@
 #include "esphome/core/log.h"
 
 static const char * TAG ="PH Sensor";
+static uint16_t SAMPLES[50];
+
 namespace esphome{
  namespace dfrobot_esp_ph_{
+    static int index = 0 ;
     void DFRobotPH::dump_config(){
        ESP_LOGCONFIG(TAG, "PH Sensor Setting UP ");
        ESP_LOGCONFIG(TAG, "PH Sensor Connected to Pin : %d ", this->_pin);
@@ -27,8 +30,26 @@ namespace esphome{
             
         }
     }
+     float DFRobotPH::getAnalogRead(){
+        float sum = 0 ;
+        for(int i=0 ; i<number_of_samples; i++){
+            sum += (SAMPLES[i]*1.0)/number_of_samples ;       }
+         return sum ;
+    }
+    void DFRobotPH::loop(){
+       static unsigned long last = millis();
+       if(millis()-last > 200){
+            SAMPLES[index]= analogRead(this->_pin);
+            index ++ ;
+            if(index >=number_of_samples){
+                index = 0 ;
+            }
+            last = millis();
+        }
+    }
     void DFRobotPH::update(){
-        float  voltage = analogRead(this->_pin) / ESPADC * ESPVOLTAGE; // read the voltage
+        //float  voltage = analogRead(this->_pin) / ESPADC * ESPVOLTAGE; // read the voltage
+        float  voltage = getAnalogRead() / ESPADC * ESPVOLTAGE; // read the voltage
         if(this->_calibration_mode_switch->state){
           ESP_LOGD(TAG, "Calibration mode of the PH Sensor ");
           ESP_LOGD(TAG, "Use and Acid or Neutral solution for calibration");

@@ -26,15 +26,19 @@ namespace esphome{
             float _neutralVoltage;
             float _voltage;
             float _temperature;
+            uint8_t number_of_samples;
             sensor::Sensor *_ph_sensor{nullptr} ;
             dfrobot_esp_ph_::DigitalSwitch *_calibration_mode_switch{nullptr} ;
+            float getAnalogRead();
             public: 
             void setup()override ;
             void update() override ;
+            void loop() override ;
             void dump_config() override;
             float get_setup_priority() const override { return esphome::setup_priority::LATE; }
             float readPH(float voltage, float temperature); // voltage to pH value, with temperature compensation
             void set_pin (uint8_t p){this->_pin = p ;}
+            void set_number_of_samples (uint8_t s){this->number_of_samples = s ;}
             void set_temperature(float t){this->_temperature = t ;}
             void set_cal_acidVoltage(float v){this->_acidVoltage = v ;}
             void set_cal_neutralVoltage(float v){this->_neutralVoltage = v ;}

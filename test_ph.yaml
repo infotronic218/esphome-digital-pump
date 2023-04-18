@@ -50,8 +50,10 @@ DFRobot_ESP_PH:
     update_interval: 10s # update interval of the PH measurement 
     calibration_mode: # Switch to select calibration mode 
       name: "Calibration mode"
+    number_of_samples: 10 # [1-50] Number of samples for the moving average calculation
     ph_sensor: # The PH sensor holding the read value
       name: "PH sensor 1"
+      accuracy_decimals: 1
     
 
 

@@ -24,6 +24,7 @@ from esphome.const import (
     STATE_CLASS_MEASUREMENT
 )
 CONF_PIN = "pin"
+CONF_NUMBER_OF_SAMPLES = "number_of_samples"
 CONF_CALIBRATION_MODE = "calibration_mode"
 CONF_ACID_VOLTAGE = "acid_voltage"
 CONF_NEUTRALE_VOLTAGE = "neutral_voltage"
@@ -41,6 +42,7 @@ DIGITAL_SWITCH = dfrobot_esp_ph_ns.class_("DigitalSwitch", switch.Switch, cg.Com
 CONFIG_SCHEMA = cv.Schema({
       cv.GenerateID(): cv.declare_id(DFRobotPH),
       cv.Required(CONF_PIN):int,
+      cv.Required(CONF_NUMBER_OF_SAMPLES):int,
       cv.Required(CONF_ACID_VOLTAGE):cv.float_,
       cv.Required(CONF_NEUTRALE_VOLTAGE):cv.float_,
       cv.Optional(CONF_TEMPERATURE, default=25.0):cv.float_,
@@ -95,6 +97,10 @@ async def to_code(config):
         pin = config[CONF_PIN]
         cg.add(var.set_pin(pin))
     
+    if CONF_NUMBER_OF_SAMPLES in config:
+        sn = config[CONF_NUMBER_OF_SAMPLES]
+        cg.add(var.set_number_of_samples(sn))
+
     if CONF_TEMPERATURE in config:
         temp = config[CONF_TEMPERATURE]
         cg.add(var.set_temperature(temp))

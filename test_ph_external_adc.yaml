@@ -1,0 +1,74 @@
+esphome:
+  name: esp32-for-digital-pump
+  includes:
+   
+  libraries:
+    - ESP32Servo
+    - SPI
+    - Wire 
+    - adafruit/Adafruit BusIO
+    - adafruit/Adafruit ADS1X15
+    
+    
+  
+ 
+
+
+external_components:
+  - source: 
+      type: local
+      path: components
+    components: [DFRobot_ads1115_ph, ads1115_adc]
+
+esp32:
+  board: esp-wrover-kit
+  framework:
+    type: arduino
+
+# Enable logging
+logger:
+
+# Enable Home Assistant API
+api:
+  password: "testing"
+
+ota:
+  password: "testing"
+
+wifi:
+  ssid: "Livebox-36B0"
+  password: "4CHfRsdx9C9c8VdH2t"
+
+  # Enable fallback hotspot (captive portal) in case wifi connection fails
+  ap:
+    ssid: "Esp32-For-Testing-Mlx9060"
+    password: "Rhg1rO0ix8Oz"
+
+captive_portal:
+
+# external ADC 
+ads1115_adc:
+  - id: External_ADC
+    sda: 25
+    scl: 26
+    address: 0x68
+
+DFRobot_ads1115_ph:
+  - id: PH1
+    pin: 35  # ADC pin Connected to the PH Sensor . Pay attention some ADC pin are used by the ESP32 and using them will generate a conflit.
+    acid_voltage: 2032.44     # Calibration for Acid solution (4.0)
+    neutral_voltage: 1500.0   # Calibration for Neutral solution (7.0)
+    temperature: 25 
+    update_interval: 10s # update interval of the PH measurement 
+    calibration_mode: # Switch to select calibration mode 
+      name: "Calibration mode"
+    number_of_samples: 10 # [1-50] Number of samples for the moving average calculation
+    ph_sensor: # The PH sensor holding the read value
+      name: "PH sensor 1"
+      accuracy_decimals: 1
+    
+
+
+#sensors:
+web_server:
+  port: 80

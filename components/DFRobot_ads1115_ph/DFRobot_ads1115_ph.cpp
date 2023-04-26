@@ -9,7 +9,7 @@ namespace esphome{
     static int index = 0 ;
     void DFRobotADS1115PH::dump_config(){
        ESP_LOGCONFIG(TAG, "PH Sensor Setting UP ");
-       ESP_LOGCONFIG(TAG, "PH Sensor Connected to Pin : %d ", this->_pin);
+       ESP_LOGCONFIG(TAG, "PH Sensor Connected to Channel : %d ", this->_channel);
        ESP_LOGCONFIG(TAG, "PH Sensor Acid Voltage Calibration is : %.2f ", this->_acidVoltage);
        ESP_LOGCONFIG(TAG, "PH Sensor Neutral Voltage Calibration is : %.2f ", this->_neutralVoltage);
     }
@@ -37,19 +37,21 @@ namespace esphome{
          return sum ;
     }
     void DFRobotADS1115PH::loop(){
-       static unsigned long last = millis();
+      /* static unsigned long last = millis();
        if(millis()-last > 200){
-            SAMPLES[index]= analogRead(this->_pin);
+           // SAMPLES[index]= analogRead(this->_pin);
             index ++ ;
             if(index >=number_of_samples){
                 index = 0 ;
             }
             last = millis();
-        }
+        }*/
     }
     void DFRobotADS1115PH::update(){
         //float  voltage = analogRead(this->_pin) / ESPADC * ESPVOLTAGE; // read the voltage
-        float  voltage = getAnalogRead() / ESPADC * ESPVOLTAGE; // read the voltage
+        //float  voltage = getAnalogRead() / ESPADC * ESPVOLTAGE; // read the voltage
+
+        float voltage = _ads1115_adc->analogRead(_channel);
         if(this->_calibration_mode_switch->state){
           ESP_LOGD(TAG, "Calibration mode of the PH Sensor ");
           ESP_LOGD(TAG, "Use and Acid or Neutral solution for calibration");

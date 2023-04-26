@@ -23,13 +23,14 @@ from esphome.const import (
     DEVICE_CLASS_TEMPERATURE,
     STATE_CLASS_MEASUREMENT
 )
-CONF_PIN = "pin"
+CONF_CHANNEL = "channel"
 CONF_NUMBER_OF_SAMPLES = "number_of_samples"
 CONF_CALIBRATION_MODE = "calibration_mode"
 CONF_ACID_VOLTAGE = "acid_voltage"
 CONF_NEUTRALE_VOLTAGE = "neutral_voltage"
 CONF_TEMPERATURE = "temperature"
 CONF_PH_SENSOR = "ph_sensor"
+CONF_ADS1115_ID = "id_ads1115"
 MULTI_CONF = True
 
 DEPENDENCIES = ['esp32']
@@ -39,9 +40,13 @@ dfrobot_ads1115_ns = cg.esphome_ns.namespace("dfrobot_ads1115_ph_")
 DFRobotADS1115PH = dfrobot_ads1115_ns.class_("DFRobotADS1115PH", cg.PollingComponent)
 DIGITAL_SWITCH = dfrobot_ads1115_ns.class_("DigitalSwitch", switch.Switch, cg.Component)
 
+ads1115_adc_ns = cg.esphome_ns.namespace("ads1115_adc_")
+ADS1115_ADC = ads1115_adc_ns.class_("ADS1115_ADC", cg.Component)
+
 CONFIG_SCHEMA = cv.Schema({
       cv.GenerateID(): cv.declare_id(DFRobotADS1115PH),
-      cv.Required(CONF_PIN):int,
+      cv.GenerateID(CONF_ADS1115_ID): cv.use_id(ADS1115_ADC),
+      cv.Required(CONF_CHANNEL):int,
       cv.Required(CONF_NUMBER_OF_SAMPLES):int,
       cv.Required(CONF_ACID_VOLTAGE):cv.float_,
       cv.Required(CONF_NEUTRALE_VOLTAGE):cv.float_,
@@ -83,6 +88,9 @@ async def to_code(config):
     var =  cg.new_Pvariable(config[CONF_ID])
     await cg.register_component(var, config)
     #await cg.register_component(var, config)
+    ads1115 = await cg.get_variable(config[CONF_ADS1115_ID])
+    cg.add(var.set_ads1115(ads1115))
+
     if CONF_PH_SENSOR in config:
         conf = config[CONF_PH_SENSOR]
         sens = await sensor.new_sensor(conf)
@@ -93,9 +101,9 @@ async def to_code(config):
         my_switch = await switch.new_switch(conf)
         cg.add(var.set_calibration_mode_switch(my_switch))
 
-    if CONF_PIN in config:
-        pin = config[CONF_PIN]
-        cg.add(var.set_pin(pin))
+    if CONF_CHANNEL in config:
+        channel = config[CONF_CHANNEL]
+        cg.add(var.set_channel(channel))
     
     if CONF_NUMBER_OF_SAMPLES in config:
         sn = config[CONF_NUMBER_OF_SAMPLES]

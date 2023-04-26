@@ -55,7 +55,8 @@ ads1115_adc:
 
 DFRobot_ads1115_ph:
   - id: PH1
-    pin: 35  # ADC pin Connected to the PH Sensor . Pay attention some ADC pin are used by the ESP32 and using them will generate a conflit.
+    id_ads1115: External_ADC  # Attach the external ADC to the PH Sensor
+    channel: 0  # ADC channel of the ADS1115 [0 - 3]
     acid_voltage: 2032.44     # Calibration for Acid solution (4.0)
     neutral_voltage: 1500.0   # Calibration for Neutral solution (7.0)
     temperature: 25 

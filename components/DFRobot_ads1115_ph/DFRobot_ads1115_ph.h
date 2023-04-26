@@ -5,6 +5,7 @@
 #include "esphome/core/component.h"
 #include "esphome/components/sensor/sensor.h"
 #include "esphome/components/switch/switch.h"
+#include "esphome/components/ads1115_adc/ads1115_adc.h"
 #include<Arduino.h>
 
 #define PH_8_VOLTAGE 1122
@@ -20,7 +21,7 @@ namespace esphome{
          class DigitalSwitch;
          class DFRobotADS1115PH : public PollingComponent{
             private:
-            uint8_t _pin ;
+            uint8_t _channel ;
             float _phValue;
             float _acidVoltage;
             float _neutralVoltage;
@@ -29,6 +30,7 @@ namespace esphome{
             uint8_t number_of_samples;
             sensor::Sensor *_ph_sensor{nullptr} ;
             dfrobot_ads1115_ph_::DigitalSwitch *_calibration_mode_switch{nullptr} ;
+            ads1115_adc_::ADS1115_ADC * _ads1115_adc {nullptr} ;
             float getAnalogRead();
             public: 
             void setup()override ;
@@ -37,13 +39,14 @@ namespace esphome{
             void dump_config() override;
             float get_setup_priority() const override { return esphome::setup_priority::LATE; }
             float readPH(float voltage, float temperature); // voltage to pH value, with temperature compensation
-            void set_pin (uint8_t p){this->_pin = p ;}
+            void set_channel (uint8_t ch){this->_channel = ch ;}
             void set_number_of_samples (uint8_t s){this->number_of_samples = s ;}
             void set_temperature(float t){this->_temperature = t ;}
             void set_cal_acidVoltage(float v){this->_acidVoltage = v ;}
             void set_cal_neutralVoltage(float v){this->_neutralVoltage = v ;}
             void set_calibration_mode_switch(dfrobot_ads1115_ph_::DigitalSwitch  *sw){this->_calibration_mode_switch = sw ;}
             void set_ph_sensor(sensor::Sensor *s){this->_ph_sensor = s ;}
+            void set_ads1115(ads1115_adc_::ADS1115_ADC *ads){this->_ads1115_adc = ads ;}
          };
 
 

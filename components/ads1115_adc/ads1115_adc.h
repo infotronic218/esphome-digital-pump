@@ -1,3 +1,5 @@
+#ifndef __ADS1115_ADC__
+#define __ADS1115_ADC__
 #include "esphome/core/component.h"
 #include<Arduino.h>
 #include<Wire.h>
@@ -27,3 +29,5 @@ namespace esphome{
     };
 
 };
+
+#endif

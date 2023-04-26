@@ -52,6 +52,7 @@ namespace esphome{
         //float  voltage = getAnalogRead() / ESPADC * ESPVOLTAGE; // read the voltage
 
         float voltage = _ads1115_adc->analogRead(_channel);
+        voltage = voltage*1000;
         if(this->_calibration_mode_switch->state){
           ESP_LOGD(TAG, "Calibration mode of the PH Sensor ");
           ESP_LOGD(TAG, "Use and Acid or Neutral solution for calibration");

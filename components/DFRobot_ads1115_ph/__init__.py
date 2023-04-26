@@ -83,7 +83,7 @@ async def add_update(var,config):
             var.get_set_trigger(), [(float, "x")], config[CONF_SET_ACTION]
         )
 
-#@coroutine_with_priority(45.0)
+@coroutine_with_priority(45.0)
 async def to_code(config):
     var =  cg.new_Pvariable(config[CONF_ID])
     await cg.register_component(var, config)

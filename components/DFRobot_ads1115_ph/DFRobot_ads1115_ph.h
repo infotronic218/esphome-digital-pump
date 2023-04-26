@@ -20,7 +20,7 @@ namespace esphome{
     namespace dfrobot_ads1115_ph_ {
          class DigitalSwitch;
          class DFRobotADS1115PH : public PollingComponent{
-            private:
+            protected:
             uint8_t _channel ;
             float _phValue;
             float _acidVoltage;
@@ -30,14 +30,14 @@ namespace esphome{
             uint8_t number_of_samples;
             sensor::Sensor *_ph_sensor{nullptr} ;
             dfrobot_ads1115_ph_::DigitalSwitch *_calibration_mode_switch{nullptr} ;
-            ads1115_adc_::ADS1115_ADC * _ads1115_adc {nullptr} ;
+            ads1115_adc_::ADS1115_ADC * _ads1115_adc;
             float getAnalogRead();
             public: 
             void setup()override ;
             void update() override ;
-            void loop() override ;
+            void loop1();
             void dump_config() override;
-            float get_setup_priority() const override { return esphome::setup_priority::LATE; }
+            float get_setup_priority() const override { return esphome::setup_priority::LATE-100; }
             float readPH(float voltage, float temperature); // voltage to pH value, with temperature compensation
             void set_channel (uint8_t ch){this->_channel = ch ;}
             void set_number_of_samples (uint8_t s){this->number_of_samples = s ;}

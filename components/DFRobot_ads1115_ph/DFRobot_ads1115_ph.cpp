@@ -36,7 +36,7 @@ namespace esphome{
             sum += (SAMPLES[i]*1.0)/number_of_samples ;       }
          return sum ;
     }
-    void DFRobotADS1115PH::loop(){
+    void DFRobotADS1115PH::loop1(){
       /* static unsigned long last = millis();
        if(millis()-last > 200){
            // SAMPLES[index]= analogRead(this->_pin);
@@ -50,9 +50,15 @@ namespace esphome{
     void DFRobotADS1115PH::update(){
         //float  voltage = analogRead(this->_pin) / ESPADC * ESPVOLTAGE; // read the voltage
         //float  voltage = getAnalogRead() / ESPADC * ESPVOLTAGE; // read the voltage
-
-        float voltage = _ads1115_adc->analogRead(_channel);
-        voltage = voltage*1000;
+        float  voltage =0;
+        if(!_ads1115_adc->is_failed()){
+           voltage = _ads1115_adc->analogRead(_channel);
+        }else{
+            ESP_LOGE(TAG, "The ADS1115 Module is not correctly initialized");
+            return ;
+        }
+        
+        //voltage = voltage*1000;
         if(this->_calibration_mode_switch->state){
           ESP_LOGD(TAG, "Calibration mode of the PH Sensor ");
           ESP_LOGD(TAG, "Use and Acid or Neutral solution for calibration");

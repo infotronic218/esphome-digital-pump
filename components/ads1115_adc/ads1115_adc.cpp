@@ -9,9 +9,8 @@ namespace esphome{
     namespace ads1115_adc_ {
              void ADS1115_ADC::setup(){
                 Wire.begin((int)this->sda_, (int)this->scl_);
-                adafruit_ADS1X15.begin(this->addr_, &Wire);
-                delay(100);
-                if(!adafruit_ADS1X15.begin()){
+                bool ret =  adafruit_ADS1X15.begin(this->addr_, &Wire);
+                if(!ret){
                     ESP_LOGE(TAG, "Failled to initialize the ADS1115 Module");
                     this->mark_failed();
                 }

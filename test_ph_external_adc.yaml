@@ -53,6 +53,7 @@ ads1115_adc:
     scl: 26
     address: 0x68
 
+
 DFRobot_ads1115_ph:
   - id: PH1
     id_ads1115: External_ADC  # Attach the external ADC to the PH Sensor
@@ -68,7 +69,6 @@ DFRobot_ads1115_ph:
       name: "PH sensor 1"
       accuracy_decimals: 1
     
-
 
 #sensors:
 web_server:

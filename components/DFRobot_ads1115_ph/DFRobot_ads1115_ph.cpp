@@ -2,7 +2,7 @@
 #include "esphome/core/log.h"
 
 static const char * TAG ="PH Sensor";
-static uint16_t SAMPLES[50];
+
 
 namespace esphome{
  namespace dfrobot_ads1115_ph_{
@@ -30,23 +30,8 @@ namespace esphome{
             
         }
     }
-     float DFRobotADS1115PH::getAnalogRead(){
-        float sum = 0 ;
-        for(int i=0 ; i<number_of_samples; i++){
-            sum += (SAMPLES[i]*1.0)/number_of_samples ;       }
-         return sum ;
-    }
-    void DFRobotADS1115PH::loop1(){
-      /* static unsigned long last = millis();
-       if(millis()-last > 200){
-           // SAMPLES[index]= analogRead(this->_pin);
-            index ++ ;
-            if(index >=number_of_samples){
-                index = 0 ;
-            }
-            last = millis();
-        }*/
-    }
+
+
     void DFRobotADS1115PH::update(){
         //float  voltage = analogRead(this->_pin) / ESPADC * ESPVOLTAGE; // read the voltage
         //float  voltage = getAnalogRead() / ESPADC * ESPVOLTAGE; // read the voltage

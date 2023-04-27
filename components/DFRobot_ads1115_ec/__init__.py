@@ -24,10 +24,9 @@ from esphome.const import (
     STATE_CLASS_MEASUREMENT
 )
 CONF_CHANNEL = "channel"
-CONF_NUMBER_OF_SAMPLES = "number_of_samples"
 CONF_CALIBRATION_MODE = "calibration_mode"
-CONF_ACID_VOLTAGE = "acid_voltage"
-CONF_NEUTRALE_VOLTAGE = "neutral_voltage"
+CONF_KVALUE_HIGH = "kvalue_high"
+CONF_KVALUE_LOW = "kvalue_low"
 CONF_TEMPERATURE = "temperature"
 CONF_PH_SENSOR = "ph_sensor"
 CONF_ADS1115_ID = "id_ads1115"
@@ -36,20 +35,19 @@ MULTI_CONF = True
 DEPENDENCIES = ['esp32']
 AUTO_LOAD = ["number", "template", "sensor", "switch"]
 
-dfrobot_ads1115_ns = cg.esphome_ns.namespace("dfrobot_ads1115_ph_")
-DFRobotADS1115PH = dfrobot_ads1115_ns.class_("DFRobotADS1115PH", cg.PollingComponent)
+dfrobot_ads1115_ns = cg.esphome_ns.namespace("dfrobot_ads1115_ec_")
+DFRobotADS1115EC = dfrobot_ads1115_ns.class_("DFRobotADS1115EC", cg.PollingComponent)
 DIGITAL_SWITCH = dfrobot_ads1115_ns.class_("DigitalSwitch", switch.Switch, cg.Component)
 
 ads1115_adc_ns = cg.esphome_ns.namespace("ads1115_adc_")
 ADS1115_ADC = ads1115_adc_ns.class_("ADS1115_ADC", cg.Component)
 
 CONFIG_SCHEMA = cv.Schema({
-      cv.GenerateID(): cv.declare_id(DFRobotADS1115PH),
+      cv.GenerateID(): cv.declare_id(DFRobotADS1115EC),
       cv.GenerateID(CONF_ADS1115_ID): cv.use_id(ADS1115_ADC),
       cv.Required(CONF_CHANNEL):int,
-      cv.Required(CONF_NUMBER_OF_SAMPLES):int,
-      cv.Required(CONF_ACID_VOLTAGE):cv.float_,
-      cv.Required(CONF_NEUTRALE_VOLTAGE):cv.float_,
+      cv.Required(CONF_KVALUE_HIGH):cv.float_,
+      cv.Required(CONF_KVALUE_LOW):cv.float_,
       cv.Optional(CONF_TEMPERATURE, default=25.0):cv.float_,
       cv.Required(CONF_PH_SENSOR):sensor.sensor_schema(
                 unit_of_measurement=UNIT_PH,
@@ -105,18 +103,15 @@ async def to_code(config):
         channel = config[CONF_CHANNEL]
         cg.add(var.set_channel(channel))
     
-    if CONF_NUMBER_OF_SAMPLES in config:
-        sn = config[CONF_NUMBER_OF_SAMPLES]
-        cg.add(var.set_number_of_samples(sn))
 
     if CONF_TEMPERATURE in config:
         temp = config[CONF_TEMPERATURE]
         cg.add(var.set_temperature(temp))
 
-    if CONF_ACID_VOLTAGE in config:
-        av = config[CONF_ACID_VOLTAGE]
-        cg.add(var.set_cal_acidVoltage(av))
+    if CONF_KVALUE_HIGH in config:
+        kv = config[CONF_KVALUE_HIGH]
+        cg.add(var.set_cal_kvalue_high(kv))
     
-    if CONF_NEUTRALE_VOLTAGE in config:
-        nv = config[CONF_NEUTRALE_VOLTAGE]
-        cg.add(var.set_cal_neutralVoltage(nv))
+    if CONF_KVALUE_LOW in config:
+        kv = config[CONF_KVALUE_LOW]
+        cg.add(var.set_cal_kvalue_low(kv))

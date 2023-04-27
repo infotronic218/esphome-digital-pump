@@ -27,7 +27,7 @@ namespace esphome{
             float _neutralVoltage;
             float _voltage;
             float _temperature;
-            uint8_t number_of_samples;
+         
             sensor::Sensor *_ph_sensor{nullptr} ;
             dfrobot_ads1115_ph_::DigitalSwitch *_calibration_mode_switch{nullptr} ;
             ads1115_adc_::ADS1115_ADC * _ads1115_adc;
@@ -35,12 +35,10 @@ namespace esphome{
             public: 
             void setup()override ;
             void update() override ;
-            void loop1();
             void dump_config() override;
             float get_setup_priority() const override { return esphome::setup_priority::LATE-100; }
             float readPH(float voltage, float temperature); // voltage to pH value, with temperature compensation
             void set_channel (uint8_t ch){this->_channel = ch ;}
-            void set_number_of_samples (uint8_t s){this->number_of_samples = s ;}
             void set_temperature(float t){this->_temperature = t ;}
             void set_cal_acidVoltage(float v){this->_acidVoltage = v ;}
             void set_cal_neutralVoltage(float v){this->_neutralVoltage = v ;}

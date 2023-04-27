@@ -18,7 +18,7 @@ external_components:
   - source: 
       type: local
       path: components
-    components: [DFRobot_ads1115_ph, ads1115_adc]
+    components: [DFRobot_ads1115_ec, ads1115_adc]
 
 esp32:
   board: esp-wrover-kit
@@ -54,14 +54,14 @@ ads1115_adc:
     address: 0x68
 
 
-DFRobot_ads1115_ph:
+DFRobot_ads1115_ec:
   - id: PH1
     id_ads1115: External_ADC  # Attach the external ADC to the PH Sensor
     channel: 0  # ADC channel of the ADS1115 [0 - 3]
-    acid_voltage: 2032.44     # Calibration for Acid solution (4.0)
-    neutral_voltage: 1500.0   # Calibration for Neutral solution (7.0)
+    kvalue_low: 1     # Calibration for Kvalue HIGH
+    kvalue_high: 1  # Calibration for Kvalue LOW
     temperature: 25 
-    update_interval: 10s # update interval of the PH measurement 
+    update_interval: 10s # update interval of the EC measurement 
     calibration_mode: # Switch to select calibration mode 
       name: "Calibration mode"
     ph_sensor: # The PH sensor holding the read value

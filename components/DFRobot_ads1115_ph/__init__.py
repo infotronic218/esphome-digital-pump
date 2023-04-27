@@ -24,7 +24,6 @@ from esphome.const import (
     STATE_CLASS_MEASUREMENT
 )
 CONF_CHANNEL = "channel"
-CONF_NUMBER_OF_SAMPLES = "number_of_samples"
 CONF_CALIBRATION_MODE = "calibration_mode"
 CONF_ACID_VOLTAGE = "acid_voltage"
 CONF_NEUTRALE_VOLTAGE = "neutral_voltage"
@@ -47,7 +46,6 @@ CONFIG_SCHEMA = cv.Schema({
       cv.GenerateID(): cv.declare_id(DFRobotADS1115PH),
       cv.GenerateID(CONF_ADS1115_ID): cv.use_id(ADS1115_ADC),
       cv.Required(CONF_CHANNEL):int,
-      cv.Required(CONF_NUMBER_OF_SAMPLES):int,
       cv.Required(CONF_ACID_VOLTAGE):cv.float_,
       cv.Required(CONF_NEUTRALE_VOLTAGE):cv.float_,
       cv.Optional(CONF_TEMPERATURE, default=25.0):cv.float_,
@@ -105,9 +103,6 @@ async def to_code(config):
         channel = config[CONF_CHANNEL]
         cg.add(var.set_channel(channel))
     
-    if CONF_NUMBER_OF_SAMPLES in config:
-        sn = config[CONF_NUMBER_OF_SAMPLES]
-        cg.add(var.set_number_of_samples(sn))
 
     if CONF_TEMPERATURE in config:
         temp = config[CONF_TEMPERATURE]

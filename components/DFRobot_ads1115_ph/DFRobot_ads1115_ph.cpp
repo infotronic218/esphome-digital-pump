@@ -58,7 +58,7 @@ namespace esphome{
             return ;
         }
         
-        //voltage = voltage*1000;
+        voltage = voltage*1000;
         if(this->_calibration_mode_switch->state){
           ESP_LOGD(TAG, "Calibration mode of the PH Sensor ");
           ESP_LOGD(TAG, "Use and Acid or Neutral solution for calibration");

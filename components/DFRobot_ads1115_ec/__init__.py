@@ -19,10 +19,10 @@ from esphome.const import (
     CONF_STEP,
     UNIT_CELSIUS,
     DEVICE_CLASS_EMPTY,
-    UNIT_PH,
     DEVICE_CLASS_TEMPERATURE,
     STATE_CLASS_MEASUREMENT
 )
+UNIT_EC = 'ms/cm'
 CONF_CHANNEL = "channel"
 CONF_CALIBRATION_MODE = "calibration_mode"
 CONF_KVALUE_HIGH = "kvalue_high"
@@ -50,7 +50,7 @@ CONFIG_SCHEMA = cv.Schema({
       cv.Required(CONF_KVALUE_LOW):cv.float_,
       cv.Optional(CONF_TEMPERATURE, default=25.0):cv.float_,
       cv.Required(CONF_PH_SENSOR):sensor.sensor_schema(
-                unit_of_measurement=UNIT_PH,
+                unit_of_measurement=UNIT_EC,
                 accuracy_decimals=2,
                 device_class=DEVICE_CLASS_EMPTY,
                 state_class=STATE_CLASS_MEASUREMENT,

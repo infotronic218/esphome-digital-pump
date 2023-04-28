@@ -36,7 +36,7 @@ namespace esphome{
             float  _rawEC;
 
         
-            sensor::Sensor *_ph_sensor{nullptr} ;
+            sensor::Sensor *_ec_sensor{nullptr} ;
             dfrobot_ads1115_ec_::DigitalSwitch *_calibration_mode_switch{nullptr} ;
             ads1115_adc_::ADS1115_ADC * _ads1115_adc;
             float getAnalogRead();
@@ -52,7 +52,7 @@ namespace esphome{
             void set_cal_kvalue_low(float kv){this->_kvalueLow = kv ;}
             void set_cal_kvalue_high(float kv){this->_kvalueHigh = kv ;}
             void set_calibration_mode_switch(dfrobot_ads1115_ec_::DigitalSwitch  *sw){this->_calibration_mode_switch = sw ;}
-            void set_ph_sensor(sensor::Sensor *s){this->_ph_sensor = s ;}
+            void set_ec_sensor(sensor::Sensor *s){this->_ec_sensor = s ;}
             void set_ads1115(ads1115_adc_::ADS1115_ADC *ads){this->_ads1115_adc = ads ;}
          };
 

@@ -28,7 +28,7 @@ CONF_CALIBRATION_MODE = "calibration_mode"
 CONF_KVALUE_HIGH = "kvalue_high"
 CONF_KVALUE_LOW = "kvalue_low"
 CONF_TEMPERATURE = "temperature"
-CONF_PH_SENSOR = "ph_sensor"
+CONF_EC_SENSOR = "ec_sensor"
 CONF_ADS1115_ID = "id_ads1115"
 MULTI_CONF = True
 
@@ -49,7 +49,7 @@ CONFIG_SCHEMA = cv.Schema({
       cv.Required(CONF_KVALUE_HIGH):cv.float_,
       cv.Required(CONF_KVALUE_LOW):cv.float_,
       cv.Optional(CONF_TEMPERATURE, default=25.0):cv.float_,
-      cv.Required(CONF_PH_SENSOR):sensor.sensor_schema(
+      cv.Required(CONF_EC_SENSOR):sensor.sensor_schema(
                 unit_of_measurement=UNIT_EC,
                 accuracy_decimals=2,
                 device_class=DEVICE_CLASS_EMPTY,
@@ -89,10 +89,10 @@ async def to_code(config):
     ads1115 = await cg.get_variable(config[CONF_ADS1115_ID])
     cg.add(var.set_ads1115(ads1115))
 
-    if CONF_PH_SENSOR in config:
-        conf = config[CONF_PH_SENSOR]
+    if CONF_EC_SENSOR in config:
+        conf = config[CONF_EC_SENSOR]
         sens = await sensor.new_sensor(conf)
-        cg.add(var.set_ph_sensor(sens))
+        cg.add(var.set_ec_sensor(sens))
 
     if  CONF_CALIBRATION_MODE in config:
         conf = config[CONF_CALIBRATION_MODE]

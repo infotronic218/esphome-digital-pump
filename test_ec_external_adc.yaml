@@ -64,8 +64,8 @@ DFRobot_ads1115_ec:
     update_interval: 10s # update interval of the EC measurement 
     calibration_mode: # Switch to select calibration mode 
       name: "Calibration mode"
-    ph_sensor: # The PH sensor holding the read value
-      name: "PH sensor 1"
+    ec_sensor: # The EC sensor holding the read value
+      name: "EC sensor 1"
       accuracy_decimals: 1
     
 

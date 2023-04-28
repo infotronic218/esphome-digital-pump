@@ -74,7 +74,7 @@ namespace esphome{
         }
         //float  voltage = analogRead(this->_pin) / ESPADC * ESPVOLTAGE; // read the voltage
         float phValue = this->readEC(voltage, this->_temperature);
-        this->_ph_sensor->publish_state(phValue) ;
+        this->_ec_sensor->publish_state(phValue) ;
     }
 
     float DFRobotADS1115EC::readEC(float voltage, float temperature){

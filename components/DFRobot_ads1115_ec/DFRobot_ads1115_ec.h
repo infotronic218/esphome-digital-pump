@@ -8,13 +8,6 @@
 #include "esphome/components/ads1115_adc/ads1115_adc.h"
 #include<Arduino.h>
 
-#define PH_8_VOLTAGE 1122
-#define PH_6_VOLTAGE 1478
-#define PH_5_VOLTAGE 1654
-#define PH_3_VOLTAGE 2010
-
-#define ESPADC 4096.0   //the esp Analog Digital Convertion value
-#define ESPVOLTAGE 3300 //the esp voltage supply value
 
 #define RES2 820.0
 #define ECREF 200.0

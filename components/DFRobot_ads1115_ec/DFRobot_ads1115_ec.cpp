@@ -32,14 +32,7 @@ namespace esphome{
         
         voltage = voltage*1000;
         if(this->_calibration_mode_switch->state){
-           this->_rawEC = 1000*voltage/RES2/ECREF;
-
-           if((this->_rawEC>0.9)&&(this->_rawEC<1.9)){                         //recognize 1.413us/cm buffer solution
-                compECsolution = 1.413*(1.0+0.0185*(this->_temperature-25.0));  //temperature compensation
-            }else if((this->_rawEC>9)&&(this->_rawEC<16.8)){                    //recognize 12.88ms/cm buffer solution
-                compECsolution = 12.88*(1.0+0.0185*(this->_temperature-25.0));  //temperature compensation
-            }
-
+          this->_rawEC = 1000*voltage/RES2/ECREF;
           ESP_LOGD(TAG, "Calibration mode of the EC Sensor ");
           ESP_LOGD(TAG, "Please put the probe into the 1413us/cm or 12.88ms/cm buffer solution");
           ESP_LOGD(TAG, "Copy the following KValue into your configuration");
@@ -57,6 +50,7 @@ namespace esphome{
             ESP_LOGE(TAG, "Check the Buffer solution used for the calibration ");
             return ;
           }
+          ESP_LOGE(TAG, "Checking the KValue");
           float KValueTemp = RES2*ECREF*compECsolution/1000.0/this->_voltage; 
           if((KValueTemp>0.5) && (KValueTemp<1.5))
           {
@@ -69,6 +63,9 @@ namespace esphome{
                 this->_kvalueHigh =  KValueTemp;
                 ESP_LOGD(TAG, "The Calibration KValue HIGH is : %.2f", KValueTemp);
             }
+            return ;
+          }else{
+            ESP_LOGE(TAG, "KValue Error : The KValue is outside the range");
           }
           ESP_LOGD(TAG, "The Calibration KValue is : %.2f", KValueTemp);
           return ;  

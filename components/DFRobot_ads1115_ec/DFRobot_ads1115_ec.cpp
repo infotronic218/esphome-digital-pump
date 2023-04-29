@@ -51,7 +51,7 @@ namespace esphome{
             return ;
           }
           ESP_LOGE(TAG, "Checking the KValue");
-          float KValueTemp = RES2*ECREF*compECsolution/1000.0/this->_voltage; 
+          float KValueTemp = RES2*ECREF*compECsolution/1000.0/voltage; 
           if((KValueTemp>0.5) && (KValueTemp<1.5))
           {
             if((this->_rawEC>0.9)&&(this->_rawEC<1.9))

@@ -55,6 +55,7 @@ namespace esphome{
           {
             ESP_LOGE(TAG, "Calibration Error from Buffer Solution ");
             ESP_LOGE(TAG, "Check the Buffer solution used for the calibration ");
+            return ;
           }
           float KValueTemp = RES2*ECREF*compECsolution/1000.0/this->_voltage; 
           if((KValueTemp>0.5) && (KValueTemp<1.5))
@@ -69,7 +70,7 @@ namespace esphome{
                 ESP_LOGD(TAG, "The Calibration KValue HIGH is : %.2f", KValueTemp);
             }
           }
-          ESP_LOGD(TAG, "The Calibration KValue is : %.2f", voltage);
+          ESP_LOGD(TAG, "The Calibration KValue is : %.2f", KValueTemp);
           return ;  
         }
         //float  voltage = analogRead(this->_pin) / ESPADC * ESPVOLTAGE; // read the voltage

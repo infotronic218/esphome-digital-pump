@@ -1,0 +1,67 @@
+esphome:
+  name: tdr-soil-sensor-on-esp32
+  includes:
+   
+  libraries:
+    
+    
+  
+ 
+
+
+external_components:
+  - source: 
+      type: local
+      path: components
+    components: [tdr_soil_sensor]
+
+esp32:
+  board: esp-wrover-kit
+  framework:
+    type: arduino
+
+# Enable logging
+logger:
+
+# Enable Home Assistant API
+api:
+  password: "testing"
+
+ota:
+  password: "testing"
+
+wifi:
+  ssid: "Bbox-727DF9A6"
+  password: "c7HwHdEL33bhCJ4fVm"
+
+  # Enable fallback hotspot (captive portal) in case wifi connection fails
+  ap:
+    ssid: "Esp32-For-Testing-Mlx9060"
+    password: "Rhg1rO0ix8Oz"
+
+captive_portal:
+
+
+
+
+
+
+tdr_soil_sensor:
+  - id: PH1
+    #pin: 35  # ADC pin Connected to the PH Sensor . Pay attention some ADC pin are used by the ESP32 and using them will generate a conflit.
+    #acid_voltage: 2032.44     # Calibration for Acid solution (4.0)
+    #neutral_voltage: 1500.0   # Calibration for Neutral solution (7.0)
+    #temperature: 25 
+    #update_interval: 10s # update interval of the PH measurement 
+    #calibration_mode: # Switch to select calibration mode 
+    #  name: "Calibration mode"
+    #number_of_samples: 10 # [1-50] Number of samples for the moving average calculation
+    #ph_sensor: # The PH sensor holding the read value
+    #  name: "PH sensor 1"
+    #  accuracy_decimals: 1
+    
+
+
+#sensors:
+web_server:
+  port: 80

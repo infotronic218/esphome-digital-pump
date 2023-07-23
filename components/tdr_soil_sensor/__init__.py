@@ -26,7 +26,6 @@ CONFIG_PIN_RE = "pin_re"
 CONFIG_PIN_DE =  "pin_de"
 CONFIG_PIN_TX = "pin_tx"
 CONFIG_PIN_RX = "pin_rx"
-CONF_SET_ACTION = "set_action"
 CONF_TEMPERATURE = "temperature"
 CONF_HUMIDITY =  "humidity"
 CONF_BULK_PERMITTIVITY = "bulk_permittivity"
@@ -36,7 +35,7 @@ MULTI_CONF = True
 print(cp)
 
 DEPENDENCIES = ['esp32']
-AUTO_LOAD = ["number","sensor", "template", "gpio", "switch"]
+AUTO_LOAD = ["sensor"]
 
 tdr_soil_sensor__ns = cg.esphome_ns.namespace("tdr_soil_sensor_")
 TDR_SOIL_SENSOR = tdr_soil_sensor__ns.class_("TDR_Soil_Sensor", cg.Component)

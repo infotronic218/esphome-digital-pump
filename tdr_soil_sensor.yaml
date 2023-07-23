@@ -6,11 +6,6 @@ esphome:
     - Wire
     - EspSoftwareSerial
     
-    
-  
- 
-
-
 external_components:
   - source: 
       type: local

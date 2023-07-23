@@ -54,6 +54,8 @@ namespace esphome {
        ESP_LOGCONFIG(TAG, "TDR DE Pin : %d ",this->pin_de);
      };
   
+     /** Read and publish data to the sensors
+     */
      void TDR_Soil_Sensor::update(){
          ESP_LOGI(TAG, "Starting new measurement");
 
@@ -79,6 +81,7 @@ namespace esphome {
        if (calculateCRC(sensorResponse, 12) != sensorResponse[12]) 
        {
         ESP_LOGE(TAG," Sensor data CRC check failed. Skipping this iteration.");
+        ESP_LOGE(TAG, "The sensors reading won't be updated to new values");
         return;
        }
 

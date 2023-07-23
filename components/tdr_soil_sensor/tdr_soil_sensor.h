@@ -10,7 +10,7 @@ https://scienceinhydroponics.com/2023/01/connecting-a-low-cost-tdr-moisture-cont
 
 #include "esphome/core/component.h"
 #include "esphome/components/sensor/sensor.h"
-#include "esphome/components/switch/switch.h"
+//#include "esphome/components/switch/switch.h"
 #include<Arduino.h>
 
 namespace esphome {

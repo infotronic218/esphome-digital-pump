@@ -43,24 +43,7 @@ wifi:
 
 captive_portal:
 
-
-### RS485 
-#Using the UART interface as RS485
-#uart:
-
- # id: modbus_serial
- # rx_pin: 1
-#  tx_pin: 2
- # baud_rate: 4800
-#  stop_bits: 1
-
-# Attach the UART interace to the modbus interface
-#modbus:
-#  id: modbus1
- # uart_id: modbus_serial
-
-
-
+# TDR Soil Sensor 
 tdr_soil_sensor:
   - id: TDR0
     pin_tx: 12 # tx pin for the UART 
@@ -88,18 +71,6 @@ tdr_soil_sensor:
       name: "Soil bulk permittivity"
       accuracy_decimals: 1
     
-    
-    #pin: 35  # ADC pin Connected to the PH Sensor . Pay attention some ADC pin are used by the ESP32 and using them will generate a conflit.
-    #acid_voltage: 2032.44     # Calibration for Acid solution (4.0)
-    #neutral_voltage: 1500.0   # Calibration for Neutral solution (7.0)
-    #temperature: 25 
-    
-    #calibration_mode: # Switch to select calibration mode 
-    #  name: "Calibration mode"
-    #number_of_samples: 10 # [1-50] Number of samples for the moving average calculation
-    #ph_sensor: # The PH sensor holding the read value
-    #  name: "PH sensor 1"
-    #  accuracy_decimals: 1
     
 
 

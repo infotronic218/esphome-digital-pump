@@ -18,6 +18,9 @@ from esphome.const import (
     CONF_RESTORE_VALUE,
     CONF_INITIAL_VALUE,
     CONF_STEP,
+    UNIT_CELSIUS,
+    DEVICE_CLASS_EMPTY,
+    STATE_CLASS_MEASUREMENT
 )
 CONFIG_PIN_RE = "pin_re"
 CONFIG_PIN_DE =  "pin_de"
@@ -26,6 +29,8 @@ CONFIG_PIN_RX = "pin_rx"
 CONF_SET_ACTION = "set_action"
 CONF_TEMPERATURE = "temperature"
 CONF_HUMIDITY =  "humidity"
+CONF_BULK_PERMITTIVITY = "bulk_permittivity"
+CONF_PORE_WATER = "pore_water"
 CONF_EC =  "ec"
 MULTI_CONF = True
 print(cp)
@@ -49,6 +54,36 @@ CONFIG_SCHEMA = cv.Schema({
       cv.Required(CONFIG_PIN_RX):int,
       cv.Required(CONFIG_PIN_DE):int,
       cv.Required(CONFIG_PIN_RE):int,
+      cv.Optional(CONF_TEMPERATURE):sensor.sensor_schema(
+                unit_of_measurement=UNIT_CELSIUS,
+                accuracy_decimals=2,
+                device_class=DEVICE_CLASS_EMPTY,
+                state_class=STATE_CLASS_MEASUREMENT,
+        ),
+        cv.Optional(CONF_HUMIDITY):sensor.sensor_schema(
+                unit_of_measurement=" %",
+                accuracy_decimals=2,
+                device_class=DEVICE_CLASS_EMPTY,
+                state_class=STATE_CLASS_MEASUREMENT,
+        ),
+        cv.Optional(CONF_EC):sensor.sensor_schema(
+                unit_of_measurement="",
+                accuracy_decimals=2,
+                device_class=DEVICE_CLASS_EMPTY,
+                state_class=STATE_CLASS_MEASUREMENT,
+        ),
+        cv.Optional(CONF_PORE_WATER):sensor.sensor_schema(
+                unit_of_measurement="",
+                accuracy_decimals=2,
+                device_class=DEVICE_CLASS_EMPTY,
+                state_class=STATE_CLASS_MEASUREMENT,
+        ),
+        cv.Optional(CONF_BULK_PERMITTIVITY):sensor.sensor_schema(
+                unit_of_measurement="",
+                accuracy_decimals=2,
+                device_class=DEVICE_CLASS_EMPTY,
+                state_class=STATE_CLASS_MEASUREMENT,
+        ),
 
     }).extend(cv.polling_component_schema("60s"))
 
@@ -77,5 +112,30 @@ async def to_code(config):
 
 
 
+    if CONF_TEMPERATURE in config:
+        conf = config[CONF_TEMPERATURE]
+        sens = await sensor.new_sensor(conf)
+        cg.add(var.set_temperature_sensor(sens))
+
+
     if CONF_HUMIDITY in config:
-        pass
+        conf = config[CONF_HUMIDITY]
+        sens = await sensor.new_sensor(conf)
+        cg.add(var.set_humidity_sensor(sens))
+
+    if CONF_EC in config:
+        conf = config[CONF_EC]
+        sens = await sensor.new_sensor(conf)
+        cg.add(var.set_ec_sensor(sens))
+
+    if CONF_PORE_WATER in config:
+        conf = config[CONF_PORE_WATER]
+        sens = await sensor.new_sensor(conf)
+        cg.add(var.set_pore_water_sensor(sens))
+
+    if CONF_BULK_PERMITTIVITY in config:
+        conf = config[CONF_BULK_PERMITTIVITY]
+        sens = await sensor.new_sensor(conf)
+        cg.add(var.set_bulk_permittivity_sensor(sens))
+
+

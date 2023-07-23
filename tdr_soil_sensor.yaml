@@ -68,6 +68,26 @@ tdr_soil_sensor:
     pin_de: 4
     pin_re: 0
     update_interval: 10s # update interval of the measurement 
+    temperature: # Soil temperature in degree 
+      name: "Soil temperature"
+      accuracy_decimals: 1
+
+    humidity: # Soil humidity in %
+      name: "Soil humidity"
+      accuracy_decimals: 1
+    
+    ec: # Soil EC
+      name: "Soil EC"
+      accuracy_decimals: 1
+    
+    pore_water: # Soil EC
+      name: "Soil pore water EC"
+      accuracy_decimals: 1
+    
+    bulk_permittivity: # Soil bulk permittivity
+      name: "Soil bulk permittivity"
+      accuracy_decimals: 1
+    
     
     #pin: 35  # ADC pin Connected to the PH Sensor . Pay attention some ADC pin are used by the ESP32 and using them will generate a conflit.
     #acid_voltage: 2032.44     # Calibration for Acid solution (4.0)

@@ -32,7 +32,7 @@ namespace tdr_soil_sensor_{
     };
 
     class TDR_Temp_Sensor: public modbus_controller::ModbusSensor{
-      
+       public:
         void parse_and_publish(const std::vector<uint8_t> &data) override{
               
             float result = payload_to_float(data, *this);
@@ -47,7 +47,7 @@ namespace tdr_soil_sensor_{
                 }
             }
 
-            result = result/100.0 ;
+            result = result/10.0 ;
             ESP_LOGD(TAG_TEMP, "Sensor new state: %.02f", result);
             // this->sensor_->raw_state = result;
             this->publish_state(result);
@@ -60,7 +60,7 @@ namespace tdr_soil_sensor_{
 
 
     class TDR_EC_Sensor: public modbus_controller::ModbusSensor{
-      
+       public:
         void parse_and_publish(const std::vector<uint8_t> &data) override{
               
             float result = payload_to_float(data, *this);
@@ -75,7 +75,7 @@ namespace tdr_soil_sensor_{
                 }
             }
 
-            result = result/100 ;
+            result = result/100.0 ;
             ESP_LOGD(TAG_EC, "Sensor new state: %.02f", result);
             // this->sensor_->raw_state = result;
             this->publish_state(result);
@@ -89,7 +89,7 @@ namespace tdr_soil_sensor_{
 
 
     class TDR_WC_Sensor: public modbus_controller::ModbusSensor{
-      
+       public:
         void parse_and_publish(const std::vector<uint8_t> &data) override{
               
             float result = payload_to_float(data, *this);
@@ -103,7 +103,7 @@ namespace tdr_soil_sensor_{
                 result = val.value();
                 }
             }
-            result = result/10 ;
+            result = result/10.0 ;
             ESP_LOGD(TAG_WC, "Sensor new state: %.02f", result);
             // this->sensor_->raw_state = result;
             this->publish_state(result);

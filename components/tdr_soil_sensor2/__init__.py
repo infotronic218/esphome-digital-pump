@@ -8,7 +8,6 @@ from esphome.components.web_server_base import CONF_WEB_SERVER_BASE_ID
 from esphome.core import CORE, coroutine_with_priority
 from esphome.components.modbus_controller import *
 from esphome import automation
-from esphome.components import sensor as my_sensor
 from esphome.components.modbus_controller.sensor import ModbusSensor
 from esphome.components.modbus_controller import MODBUS_REGISTER_TYPE, SENSOR_VALUE_TYPE
 import esphome.helpers as myhelps
@@ -113,7 +112,7 @@ async def to_code(config):
             conf[CONF_FORCE_NEW_RANGE],
         )
         await cg.register_component(var, conf)
-        await my_sensor.register_sensor(var, conf)
+        await sensor.register_sensor(var, conf)
 
         paren = await cg.get_variable(conf[CONF_MODBUS_CONTROLLER_ID])
         cg.add(paren.add_sensor_item(var))
@@ -144,7 +143,7 @@ async def to_code(config):
             conf[CONF_FORCE_NEW_RANGE],
         )
         await cg.register_component(var, conf)
-        await my_sensor.register_sensor(var, conf)
+        await sensor.register_sensor(var, conf)
 
         paren = await cg.get_variable(conf[CONF_MODBUS_CONTROLLER_ID])
         cg.add(paren.add_sensor_item(var))
@@ -175,7 +174,7 @@ async def to_code(config):
             conf[CONF_FORCE_NEW_RANGE],
         )
         await cg.register_component(var, conf)
-        await my_sensor.register_sensor(var, conf)
+        await sensor.register_sensor(var, conf)
 
         paren = await cg.get_variable(conf[CONF_MODBUS_CONTROLLER_ID])
         cg.add(paren.add_sensor_item(var))

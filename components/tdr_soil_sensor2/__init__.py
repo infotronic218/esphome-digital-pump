@@ -11,8 +11,7 @@ from esphome import automation
 from esphome.components.modbus_controller.sensor import ModbusSensor
 from esphome.components.modbus_controller import MODBUS_REGISTER_TYPE, SENSOR_VALUE_TYPE
 import esphome.helpers as myhelps
-#print(myhelps)
-#print(myhelps._TYPE_OVERLOADS[int](10) )
+
 from esphome.const import (
     CONF_ID,
     CONF_INITIAL_VALUE,
@@ -39,7 +38,7 @@ CONF_PORE_WATER = "pore_water"
 CONF_EC =  "ec"
 CONF_WC = "wc"
 MULTI_CONF = True
-#print(cp)
+
 
 DEPENDENCIES = ['esp32']
 AUTO_LOAD = ["sensor", "modbus","modbus_controller"]
@@ -52,11 +51,6 @@ TDR_SOIL_SENSOR = tdr_soil_sensor__ns.class_("TDR_Soil_Sensor",  cg.Component)
 TDR_TEMP_SENSOR = tdr_soil_sensor__ns.class_("TDR_Temp_Sensor",cg.Component, sensor.Sensor, SensorItem)
 TDR_EC_SENSOR = tdr_soil_sensor__ns.class_("TDR_EC_Sensor",modbus_controller.sensor.ModbusSensor)
 TDR_WC_SENSOR = tdr_soil_sensor__ns.class_("TDR_WC_Sensor",modbus_controller.sensor.ModbusSensor)
-
-#print(modbus_controller.sensor.CONFIG_SCHEMA)
-#template_number_ns = cg.esphome_ns.namespace("digital_pump")
-#TemplateNumber = template_number_ns.class_("TemplateNumber",number.Number, cg.PollingComponent)
-
 
 
 TEMP_SENSOR_CONFIG_SCHEMA = cv.All(
@@ -107,7 +101,6 @@ CONFIG_SCHEMA = cv.Schema({
       cv.Optional(CONF_EC):EC_SENSOR_CONFIG_SCHEMA,
       cv.Optional(CONF_TEMPERATURE):TEMP_SENSOR_CONFIG_SCHEMA,
       cv.Optional(CONF_WC):WC_SENSOR_CONFIG_SCHEMA
-     # cv.Optional(CONF_TEMPERATURE):modbus_controller.sensor.CONFIG_SCHEMA
     }).extend(cv.polling_component_schema("60s"))
 
 
@@ -115,19 +108,13 @@ CONFIG_SCHEMA = cv.Schema({
 async def to_code(config):
     var =  cg.new_Pvariable(config[CONF_ID])
     await cg.register_component(var, config)
-    #await cg.register_component(var, config)
 
     if CONF_WC in config:
         conf = config[CONF_WC]
         byte_offset, reg_count = modbus_calc_properties(conf)
-        #print(byte_offset, reg_count)
         value_type = conf[CONF_VALUE_TYPE]
         register_type = conf[CONF_REGISTER_TYPE]
-        register_type = MODBUS_REGISTER_TYPE['read']
-        #print("Value Type",value_type)
-        
-        #print(type(value_type))
-        #value_type = "U_WORD" 
+        register_type = MODBUS_REGISTER_TYPE['read'] 
         value_type = SENSOR_VALUE_TYPE['U_WORD']
         var = cg.new_Pvariable(
             conf[CONF_ID],
@@ -142,7 +129,6 @@ async def to_code(config):
         )
         await cg.register_component(var, conf)
         await sensor.register_sensor(var, conf)
-
         paren = await cg.get_variable(conf[CONF_MODBUS_CONTROLLER_ID])
         cg.add(paren.add_sensor_item(var))
         await add_modbus_base_properties(var, conf, TDR_WC_SENSOR)
@@ -151,14 +137,9 @@ async def to_code(config):
     if CONF_TEMPERATURE in config:
         conf = config[CONF_TEMPERATURE]
         byte_offset, reg_count = modbus_calc_properties(conf)
-        #print(byte_offset, reg_count)
         value_type = conf[CONF_VALUE_TYPE]
         register_type = conf[CONF_REGISTER_TYPE]
         register_type = MODBUS_REGISTER_TYPE['read']
-        #print("Value Type",value_type)
-        
-        #print(type(value_type))
-        #value_type = "U_WORD" 
         value_type = SENSOR_VALUE_TYPE['U_WORD']
         var = cg.new_Pvariable(
             conf[CONF_ID],
@@ -181,14 +162,11 @@ async def to_code(config):
     if CONF_EC in config:
         conf = config[CONF_EC]
         byte_offset, reg_count = modbus_calc_properties(conf)
-        #print(byte_offset, reg_count)
+
         value_type = conf[CONF_VALUE_TYPE]
         register_type = conf[CONF_REGISTER_TYPE]
         register_type = MODBUS_REGISTER_TYPE['read']
-        #print("Value Type",value_type)
-        
-        #print(type(value_type))
-        #value_type = "U_WORD" 
+
         value_type = SENSOR_VALUE_TYPE['U_WORD']
         var = cg.new_Pvariable(
             conf[CONF_ID],

@@ -37,6 +37,9 @@ CONF_BULK_PERMITTIVITY = "bulk_permittivity"
 CONF_PORE_WATER = "pore_water"
 CONF_EC =  "ec"
 CONF_WC = "wc"
+CONF_SOIL_TEMPERATURE_SENSOR = "soil_temperature"
+CONF_SOIL_HUMIDITY_SENSOR = "soil_humidity"
+CONF_SOIL_PW_EC_SENSOR = "soil_pw_ec"
 MULTI_CONF = True
 
 
@@ -98,9 +101,27 @@ EC_SENSOR_CONFIG_SCHEMA = cv.All(
 
 CONFIG_SCHEMA = cv.Schema({
       cv.GenerateID(): cv.declare_id(TDR_SOIL_SENSOR),
-      cv.Optional(CONF_EC):EC_SENSOR_CONFIG_SCHEMA,
-      cv.Optional(CONF_TEMPERATURE):TEMP_SENSOR_CONFIG_SCHEMA,
-      cv.Optional(CONF_WC):WC_SENSOR_CONFIG_SCHEMA
+      cv.Required(CONF_EC):EC_SENSOR_CONFIG_SCHEMA,
+      cv.Required(CONF_TEMPERATURE):TEMP_SENSOR_CONFIG_SCHEMA,
+      cv.Required(CONF_WC):WC_SENSOR_CONFIG_SCHEMA,
+      cv.Optional(CONF_SOIL_TEMPERATURE_SENSOR):sensor.sensor_schema(
+                unit_of_measurement="°C",
+                accuracy_decimals=2,
+                device_class=DEVICE_CLASS_EMPTY,
+                state_class=STATE_CLASS_MEASUREMENT,
+        ),
+       cv.Optional(CONF_SOIL_HUMIDITY_SENSOR):sensor.sensor_schema(
+                unit_of_measurement="",
+                accuracy_decimals=2,
+                device_class=DEVICE_CLASS_EMPTY,
+                state_class=STATE_CLASS_MEASUREMENT,
+        ),
+        cv.Optional(CONF_SOIL_PW_EC_SENSOR):sensor.sensor_schema(
+                unit_of_measurement="°C",
+                accuracy_decimals=2,
+                device_class=DEVICE_CLASS_EMPTY,
+                state_class=STATE_CLASS_MEASUREMENT,
+        ),
     }).extend(cv.polling_component_schema("60s"))
 
 
@@ -108,7 +129,7 @@ CONFIG_SCHEMA = cv.Schema({
 async def to_code(config):
     var =  cg.new_Pvariable(config[CONF_ID])
     await cg.register_component(var, config)
-
+    var2 = var
     if CONF_WC in config:
         conf = config[CONF_WC]
         byte_offset, reg_count = modbus_calc_properties(conf)
@@ -186,3 +207,17 @@ async def to_code(config):
         cg.add(paren.add_sensor_item(var))
         await add_modbus_base_properties(var, conf, TDR_EC_SENSOR)
 
+    if CONF_SOIL_TEMPERATURE_SENSOR in config:
+        conf = config[CONF_SOIL_TEMPERATURE_SENSOR]
+        sens = await sensor.new_sensor(conf)
+        cg.add(var2.set_soil_temperature_sensor(sens))
+
+    if CONF_SOIL_HUMIDITY_SENSOR in config:
+        conf = config[CONF_SOIL_HUMIDITY_SENSOR]
+        sens = await sensor.new_sensor(conf)
+        cg.add(var2.set_soil_humidity_sensor(sens))
+
+    if CONF_SOIL_PW_EC_SENSOR in config:
+        conf = config[CONF_SOIL_PW_EC_SENSOR]
+        sens = await sensor.new_sensor(conf)
+        cg.add(var2.set_soil_pw_ec_sensor(sens))

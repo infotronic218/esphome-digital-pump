@@ -69,18 +69,23 @@ tdr_soil_sensor2:
       unit_of_measurement: "%"
       accuracy_decimals: 1
       state_class: measurement
-
     temperature: # Soil temperature in degree 
       id: Temp
-      name: "Soil temperature"
+      name: "Soil temp"
       address: 0x0001
       accuracy_decimals: 1
       unit_of_measurement: "°C"
       state_class: measurement
-
     ec:
       id: EC
       name: "Conductivity 1 dS/m = 1 mS/cm"
       address: 0x0002
       accuracy_decimals: 1
       state_class: measurement
+
+    soil_temperature:
+      name: "Soil Calibrated Temperature"
+    soil_humidity:
+      name: "Soil Calibrated Humidity"
+    soil_pw_ec:
+      name: "Soil soil PW EC"

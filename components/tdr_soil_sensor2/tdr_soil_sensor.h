@@ -10,15 +10,27 @@
 
 namespace esphome{
 namespace tdr_soil_sensor__{
+   struct SensorData
+    {
+        float soil_ec ;
+        float soil_temp ;
+        float soil_hum ;
+    };
+    
     class TDR_Temp_Sensor;
     class TDR_Soil_Sensor :public PollingComponent {
          private:
-            
+            sensor::Sensor *soil_temperature_sensor_{nullptr} ;
+            sensor::Sensor *soil_humidity_sensor_{nullptr} ;
+            sensor::Sensor *soil_pw_ec_sensor_{nullptr} ;
             public:
             void setup() override;
             void update() override ;
             void dump_config() override;
-            float get_setup_priority() const override { return  -250; }
+            float get_setup_priority() const override { return  -300; }
+            void set_soil_temperature_sensor(sensor::Sensor *s){this->soil_temperature_sensor_ = s ;}
+            void set_soil_humidity_sensor(sensor::Sensor *s){this->soil_humidity_sensor_ = s ;}
+            void set_soil_pw_ec_sensor(sensor::Sensor *s){this->soil_pw_ec_sensor_ = s ;}
             
 
     };

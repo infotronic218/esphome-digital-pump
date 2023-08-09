@@ -85,7 +85,13 @@ tdr_soil_sensor2:
 
     soil_temperature:
       name: "Soil Calibrated Temperature"
+      unit_of_measurement: "°C"
+      accuracy_decimals: 1
     soil_humidity:
       name: "Soil Calibrated Humidity"
+      unit_of_measurement: "%"
+      accuracy_decimals: 1
     soil_pw_ec:
       name: "Soil soil PW EC"
+      unit_of_measurement: ""
+      accuracy_decimals: 1

@@ -13,7 +13,8 @@ namespace esphome {
             }
             void TDR_Soil_Sensor::update() {
                  ESP_LOGI(TAG, "Computing sensor data");
-                 float soil_ec = 1.93 * soil_ec - 270.8;
+                 float soil_ec = sensor_data.soil_ec*100;
+                 soil_ec = 1.93 * soil_ec - 270.8;
                  float soil_temp = sensor_data.soil_temp ;
                  float soil_hum = sensor_data.soil_hum ;
                  soil_ec = soil_ec / (1.0 + 0.019 * (soil_temp -25 )) ;

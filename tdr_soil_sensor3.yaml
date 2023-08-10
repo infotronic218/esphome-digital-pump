@@ -10,7 +10,7 @@ external_components:
   - source: 
       type: local
       path: components
-    components: [tdr_soil_sensor2]
+    components: [tdr_soil_sensor3]
 
 esp32:
   board: esp-wrover-kit
@@ -60,7 +60,7 @@ modbus_controller:
 
  
 # TDR Soil Sensor 
-tdr_soil_sensor2:
+tdr_soil_sensor3:
   - id: TDR0
     wc:
       id: WC

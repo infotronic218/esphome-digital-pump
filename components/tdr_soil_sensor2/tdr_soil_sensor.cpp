@@ -78,8 +78,9 @@ namespace esphome {
                 }
             }
             
-            sensor_data.soil_ec = result ;
+            
             result = result/100.0 ;
+            sensor_data.soil_ec = result ;
             ESP_LOGD(TAG_EC, "Sensor new state: %.02f", result);
             // this->sensor_->raw_state = result;
             this->publish_state(result);
@@ -103,7 +104,7 @@ namespace esphome {
                 }
             }
             result = result/10.0 ;
-            sensor_data.soil_hum ;
+            sensor_data.soil_hum = result ;
             ESP_LOGD(TAG_WC, "Sensor new state: %.02f", result);
             // this->sensor_->raw_state = result;
             this->publish_state(result);

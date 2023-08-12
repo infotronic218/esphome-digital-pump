@@ -53,7 +53,7 @@ namespace esphome {
 
                 soil_temperature_sensor_->publish_state(soil_temp);
                 soil_humidity_sensor_->publish_state(soil_hum);
-                soil_pw_ec_sensor_->publish_state(soil_pore_water_ec);
+                soil_pw_ec_sensor_->publish_state(soil_pore_water_ec/10.0);
            
             }
             void TDR_Soil_Sensor::dump_config(){
